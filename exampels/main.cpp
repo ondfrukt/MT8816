@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include <MT8816.h>
 
-// Defining MCP23017 address
+// Defining the MCP23017 address
 const uint8_t MCP_ADDRESS = 0x20;
 
 // Defining pin connections between MCP23017 and MT8816
@@ -31,9 +31,9 @@ void setup() {
 }
 
 void loop() {
-  // Looping through all crosspoints in the MT8816 Matrix
+  // Looping through all crosspoints in the MT8816 matrix
   for (int j = 0; j < 16; ++j) {
-    for (int i = 0; i < 8; i++) {
+    for (int i = 0; i < 8; ++i) {
       mt8816.connect(j, i);
       Serial.print("X");
       Serial.print(j);
