@@ -9,7 +9,7 @@ MT8816::MT8816(uint8_t mcp_address,
 {
     _mcp_address = mcp_address;
 
-    // Createing a vector of the adress pins
+    // Creating a vector of the address pins
     _ax_pins[0] = ax0;
     _ax_pins[1] = ax1;
     _ax_pins[2] = ax2;
@@ -27,22 +27,22 @@ void MT8816::begin()
 {
     Wire.begin();
 
-    // Testing MCP adress
+    // Testing MCP address
     if (!_mcp.begin_I2C(_mcp_address)) {
         Serial.println("MCP23017 initialization failed. Check connections and address.");
         return;
     }
     Serial.println("MCP23017 initialized successfully.");
 
-    // Config adress pins
-    for (int i = 0; i < 4; i++) {
+    // Configure address pins
+    for (int i = 0; i < 4; ++i) {
         _mcp.pinMode(_ax_pins[i], OUTPUT);
     }
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < 3; ++i) {
         _mcp.pinMode(_ay_pins[i], OUTPUT);
     }
 
-    // Config programming pins 
+    // Configure programming pins 
     _mcp.pinMode(_strobe_pin, OUTPUT);
     _mcp.pinMode(_data_pin, OUTPUT);
     _mcp.pinMode(_reset_pin, OUTPUT);
@@ -54,14 +54,14 @@ void MT8816::begin()
     _mcp.digitalWrite(_reset_pin, HIGH);
     _mcp.digitalWrite(_cs_pin, HIGH);
 
-    // Reseting MCP
+    // Reset MCP
     reset();
     Serial.println("MT8816 initialized successfully.");
 }
 
 void MT8816::reset()
 {   
-    // Pulsing reset pin to reset the IC
+    // Pulse the reset pin to reset the IC
     _mcp.digitalWrite(_reset_pin, LOW);
     delayMicroseconds(10);
     _mcp.digitalWrite(_reset_pin, HIGH);
@@ -74,7 +74,7 @@ void MT8816::connect(uint8_t x, uint8_t y)
 {
     setAddress(x, y);
     _mcp.digitalWrite(_data_pin, HIGH);
-    delay(10);  // Short delay to ensure data pin i stable
+    delay(10);  // Short delay to ensure data pin is stable
     strobe();
 }
 
@@ -82,18 +82,18 @@ void MT8816::disconnect(uint8_t x, uint8_t y)
 {
     setAddress(x, y);
     _mcp.digitalWrite(_data_pin, LOW);
-    delay(10);  // Short delay to ensure data pin i stable
+    delay(10);  // Short delay to ensure data pin is stable
     strobe();
 }
 
 void MT8816::setAddress(uint8_t x, uint8_t y)
 {
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < 4; ++i) {
         bool bit = (x >> i) & 0x01;
         _mcp.digitalWrite(_ax_pins[i], bit);
     }
 
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < 3; ++i) {
         bool bit = (y >> i) & 0x01;
         _mcp.digitalWrite(_ay_pins[i], bit);
     }
