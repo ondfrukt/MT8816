@@ -22,6 +22,12 @@ MT8816::MT8816(uint8_t mcp_address,
     _reset_pin = reset;
     _cs_pin = cs;
 }
+    // Initiate connection matrix
+    for (int i = 0; i < 8; i++) {
+        for (int j = 0; j < 8; j++) {
+        lineConnections[i][j] = false;
+        }
+    }
 
 void MT8816::begin()
 {
@@ -57,6 +63,7 @@ void MT8816::begin()
     // Reset MCP
     reset();
     Serial.println("MT8816 initialized successfully.");
+
 }
 
 void MT8816::reset()
@@ -76,6 +83,14 @@ void MT8816::connect(uint8_t x, uint8_t y)
     _mcp.digitalWrite(_data_pin, HIGH);
     delay(10);  // Short delay to ensure data pin is stable
     strobe();
+    lineConnections[x][y] = true;
+
+    setAddress(y, x);
+    _mcp.digitalWrite(_data_pin, HIGH);
+    delay(10);  // Short delay to ensure data pin is stable
+    strobe();
+    lineConnections[y][x] = true;
+
 }
 
 void MT8816::disconnect(uint8_t x, uint8_t y)
@@ -84,6 +99,13 @@ void MT8816::disconnect(uint8_t x, uint8_t y)
     _mcp.digitalWrite(_data_pin, LOW);
     delay(10);  // Short delay to ensure data pin is stable
     strobe();
+    lineConnections[x][y] = false;
+
+    setAddress(y, x);
+    _mcp.digitalWrite(_data_pin, LOW);
+    delay(10);  // Short delay to ensure data pin is stable
+    strobe();
+    lineConnections[y][x] = false;
 }
 
 void MT8816::setAddress(uint8_t x, uint8_t y)
