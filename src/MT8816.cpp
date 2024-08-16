@@ -108,6 +108,18 @@ void MT8816::disconnect(uint8_t x, uint8_t y)
     lineConnections[y][x] = false;
 }
 
+bool MT8816::getLineConnection(int x, int y) {
+    // Check if the coordinates are within the valid range
+    if (x >= 0 && x < 8 && y >= 0 && y < 8) {
+        return lineConnections[x][y];
+    } else {
+        // Handle invalid coordinates, e.g., by returning a default value or throwing an exception
+        std::cerr << "Error: Invalid coordinates (" << x << ", " << y << ")." << std::endl;
+        return;
+    }
+}
+
+
 void MT8816::setAddress(uint8_t x, uint8_t y)
 {
     for (int i = 0; i < 4; ++i) {
