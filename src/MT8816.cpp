@@ -120,10 +120,9 @@ bool MT8816::getConnection(int x, int y) {
     } else {
         // Handle invalid coordinates, e.g., by returning a default value or throwing an exception
         std::cerr << "Error: Invalid coordinates (" << x << ", " << y << ")." << std::endl;
-        return;
+        return false;
     }
 }
-
 
 void MT8816::setAddress(uint8_t x, uint8_t y)
 {
