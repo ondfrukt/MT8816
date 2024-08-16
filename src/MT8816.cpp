@@ -108,7 +108,7 @@ void MT8816::disconnect(uint8_t x, uint8_t y)
     lineConnections[y][x] = false;
 }
 
-bool MT8816::getLineConnection(int x, int y) {
+bool MT8816::getConnection(int x, int y) {
     // Check if the coordinates are within the valid range
     if (x >= 0 && x < 8 && y >= 0 && y < 8) {
         return lineConnections[x][y];
