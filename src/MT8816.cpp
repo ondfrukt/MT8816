@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include "MT8816.h"
 #include <Wire.h>
+#include <iostream>
 
 MT8816::MT8816(uint8_t mcp_address, 
                uint8_t ax0, uint8_t ax1, uint8_t ax2, uint8_t ax3,
@@ -21,13 +22,17 @@ MT8816::MT8816(uint8_t mcp_address,
     _data_pin = data;
     _reset_pin = reset;
     _cs_pin = cs;
-}
+
     // Initiate connection matrix
     for (int i = 0; i < 8; i++) {
         for (int j = 0; j < 8; j++) {
         connections[i][j] = false;
         }
     }
+
+
+}
+
 
 void MT8816::begin()
 {
