@@ -25,7 +25,7 @@ class MT8816
     uint8_t _data_pin;
     uint8_t _reset_pin;
     uint8_t _cs_pin;
-    bool lineConnections [8][8];
+    bool Connections [8][8];
     void setAddress(uint8_t x, uint8_t y);
     void strobe();
 };
