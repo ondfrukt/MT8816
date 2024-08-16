@@ -25,7 +25,7 @@ MT8816::MT8816(uint8_t mcp_address,
     // Initiate connection matrix
     for (int i = 0; i < 8; i++) {
         for (int j = 0; j < 8; j++) {
-        Connections[i][j] = false;
+        connections[i][j] = false;
         }
     }
 
@@ -83,13 +83,13 @@ void MT8816::connect(uint8_t x, uint8_t y)
     _mcp.digitalWrite(_data_pin, HIGH);
     delay(10);  // Short delay to ensure data pin is stable
     strobe();
-    Connections[x][y] = true;
+    connections[x][y] = true;
 
     setAddress(y, x);
     _mcp.digitalWrite(_data_pin, HIGH);
     delay(10);  // Short delay to ensure data pin is stable
     strobe();
-    Connections[y][x] = true;
+    connections[y][x] = true;
 
 }
 
@@ -99,19 +99,19 @@ void MT8816::disconnect(uint8_t x, uint8_t y)
     _mcp.digitalWrite(_data_pin, LOW);
     delay(10);  // Short delay to ensure data pin is stable
     strobe();
-    Connections[x][y] = false;
+    connections[x][y] = false;
 
     setAddress(y, x);
     _mcp.digitalWrite(_data_pin, LOW);
     delay(10);  // Short delay to ensure data pin is stable
     strobe();
-    Connections[y][x] = false;
+    connections[y][x] = false;
 }
 
 bool MT8816::getConnection(int x, int y) {
     // Check if the coordinates are within the valid range
     if (x >= 0 && x < 8 && y >= 0 && y < 8) {
-        return Connections[x][y];
+        return connections[x][y];
     } else {
         // Handle invalid coordinates, e.g., by returning a default value or throwing an exception
         std::cerr << "Error: Invalid coordinates (" << x << ", " << y << ")." << std::endl;
